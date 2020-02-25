@@ -1,7 +1,0 @@
-{
-  "mongodb":{
-    "address":"127.0.0.1",
-    "port":27017
-  },
-  "net_address":"http://www.hbun.edu.cn/wzdh/tzgg.htm"
-}

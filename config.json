@@ -1,0 +1,15 @@
+{
+  "mongodb":{
+    "address":"127.0.0.1",
+    "port":27017
+  },
+  "net_address":"http://www.hbun.edu.cn/wzdh/tzgg.htm",
+  "logging": {
+    "path": "log",
+    "file": "log",
+    "format": "%(asctime)s %(filename)s[tid:%(thread)d][%(module)s:%(funcName)s:%(lineno)d][%(levelname)s]->%(message)s",
+    "size": 26214400,
+    "count": 10,
+    "level": 20
+  }
+}

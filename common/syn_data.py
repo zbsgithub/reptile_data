@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2020/2/25 13:49 
+# @Time    : 2020/2/25 15:36 
 # @Author  : zbs
 # @Site    :
-# @File    : reptile_main.py
+# @File    : syn_data.py
 # @Software: PyCharm
 
 import schedule
@@ -13,9 +13,7 @@ import pymongo
 from bs4 import BeautifulSoup
 import requests
 import traceback
-import json
-import sys
-from common.logger_init import logger
+import logging
 
 
 class Reptile():
@@ -27,9 +25,9 @@ class Reptile():
 
     def handle_task(self):
 
-        logger.info('----task handle begin time:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        logging.info('----task handle begin time:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
         self.sov_html()
-        logger.info('----task handle end time:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
+        logging.info('----task handle end time:%s' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
 
     def mongodb(self, total_page, total_count):
         try:
@@ -40,11 +38,13 @@ class Reptile():
 
             collec_size = collection.count()
             current_time = time.strftime('%Y-%m-%d', time.localtime())
-            logger.info("库中总记录数：%d" % collec_size)
+            logging.info("库中总记录数：%d" % collec_size)
             if int(total_count) == collec_size:
-                logger.info( '----------------------database data aleardy new -----------%s---------------' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+                logging.info(
+                    '----------------------database data aleardy new -----------%s---------------' % datetime.datetime.now().strftime(
+                        '%Y-%m-%d %H:%M:%S'))
             else:
-                logger.info('------------------------------------database data begin syn --------------------------')
+                logging.info('------------------------------------database data begin syn --------------------------')
                 collection.remove()
                 for page in range(int(total_page)):
                     if page == 0:
@@ -61,7 +61,7 @@ class Reptile():
                         # content_bf = gener_sov_html("http://www.hbun.edu.cn/" + content_address)
                         # content = content_bf.find_all("div", class_="v_news_content")
 
-                        logger.info("第%s页 %s   %s  %s" % (str(page), title, pub_time, content_address))
+                        logging.info("第%s页 %s   %s  %s" % (str(page), title, pub_time, content_address))
 
                         insert_data = {
                             'title': title,
@@ -71,7 +71,7 @@ class Reptile():
                         }
                         collection.insert(insert_data)
 
-                logger.info('------------------------------------database data begin syn --------------------------')
+                logging.info('------------------------------------database data begin syn --------------------------')
         except:
             traceback.format_exc()
 
@@ -99,12 +99,3 @@ class Reptile():
         # schedule.every(2).hour.do(self.handle_task)
         while True:
             schedule.run_pending()
-
-
-if __name__ == '__main__':
-    config_file = sys.argv[1]
-    with open(config_file, 'r', encoding='utf-8') as file:
-        config = json.load(file)
-
-    reptile = Reptile(config["mongodb"]["address"], config["mongodb"]["port"], config["net_address"])
-    reptile.run()

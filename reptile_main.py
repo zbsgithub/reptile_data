@@ -8,7 +8,8 @@
 import sys
 import json
 import os
-from common.syn_data import Reptile
+# from common.syn_data import Reptile
+from common.syn_tjj import Reptile
 from utils.log import log_init
 
 if __name__ == '__main__':

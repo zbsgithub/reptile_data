@@ -3,7 +3,7 @@
     "address":"127.0.0.1",
     "port":27017
   },
-  "net_address":"http://www.hbun.edu.cn/wzdh/tzgg.htm",
+  "net_address":"http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/index.html",
   "logging": {
     "path": "log",
     "file": "log",
